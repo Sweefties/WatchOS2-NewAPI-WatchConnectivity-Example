@@ -39,9 +39,8 @@ Configure iOS App:
 - connect your UIButton to your ViewController class
 - define your UIButton IBAction
 
-- example of code in controllers classes WKInterfaceController (for WatchOS) AND ViewController (for iOS App).
 
-
+Example of code in controllers classes WKInterfaceController (for WatchOS) AND ViewController (for iOS App) :
 
 - Add WatchConnectivity Framework
 ```swift
