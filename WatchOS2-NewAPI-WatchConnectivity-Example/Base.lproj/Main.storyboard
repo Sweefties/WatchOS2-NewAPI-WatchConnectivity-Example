@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8187.4" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8151.3"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WatchOS2_NewAPI_WatchConnectivity_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,8 +15,33 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gt-u9-LAF">
+                                <rect key="frame" x="240" y="285" width="121" height="30"/>
+                                <state key="normal" title="SEND TO WATCH"/>
+                                <connections>
+                                    <action selector="sendToWatch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ajk-6X-LJs"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REPLY MESSAGE" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0h-I1-Mm3">
+                                <rect key="frame" x="234" y="218" width="132" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="t0h-I1-Mm3" firstAttribute="centerX" secondItem="7gt-u9-LAF" secondAttribute="centerX" id="Mhb-Iq-nmj"/>
+                            <constraint firstItem="7gt-u9-LAF" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="a5b-sF-Jy7"/>
+                            <constraint firstItem="7gt-u9-LAF" firstAttribute="top" secondItem="t0h-I1-Mm3" secondAttribute="bottom" constant="46" id="iW7-jW-1nG"/>
+                            <constraint firstItem="7gt-u9-LAF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pHy-z7-0m1"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="replyLabel" destination="t0h-I1-Mm3" id="BT4-eX-ogy"/>
+                        <outlet property="sendButton" destination="7gt-u9-LAF" id="8uY-N9-47N"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
