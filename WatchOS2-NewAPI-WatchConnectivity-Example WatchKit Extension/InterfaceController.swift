@@ -11,6 +11,14 @@ import Foundation
 import WatchConnectivity
 
 class InterfaceController: WKInterfaceController, WCSessionDelegate {
+    
+    
+    /** Called when the session has completed activation. If session state is WCSessionActivationStateNotActivated there will be an error with more details. */
+    @available(watchOS 2.2, *)
+    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        //..code
+    }
+
 
     // MARK: - Interface
     @IBOutlet var messageLabel: WKInterfaceLabel!
@@ -20,8 +28,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     var session : WCSession!
     
     // MARK: - Context Initializer
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         // Configure interface objects here.
     }
 
@@ -32,9 +40,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         
         // To configure and activate the session
         if WCSession.isSupported() {
-            session = WCSession.defaultSession()
+            session = WCSession.default()
             session.delegate = self
-            session.activateSession()
+            session.activate()
         }
     }
 
@@ -62,13 +70,13 @@ typealias WatchSessionProtocol = InterfaceController
 extension WatchSessionProtocol {
     
     // WCSession Delegate protocol
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
         
         // Reply handler, received message
         let value = message["Message"] as? String
         
         // GCD - Present on the screen
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        DispatchQueue.main.async { () -> Void in
             self.messageLabel.setText(value!)
         }
         
@@ -89,7 +97,7 @@ extension WatchSessionTasks {
         let messageToSend = ["Message":"Hey iPhone! I'm reachable!!!"]
         
         // Task : Sends a message immediately to the counterpart and optionally delivers a response
-        session.sendMessage(messageToSend, replyHandler: { (replyMessage) -> Void in
+        session.sendMessage(messageToSend, replyHandler: { (replyMessage) in
             
             // Reply handler - present the reply message on screen
             let value = replyMessage["Message"] as? String
@@ -97,7 +105,7 @@ extension WatchSessionTasks {
             // Set message label text with value
             self.messageLabel.setText(value)
             
-            }) { (error:NSError) -> Void in
+            }) { (error) in
                 // Catch any error Handler
                 print("error: \(error.localizedDescription)")
         }

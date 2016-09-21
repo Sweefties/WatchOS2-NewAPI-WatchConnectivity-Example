@@ -10,13 +10,34 @@ import UIKit
 import WatchConnectivity
 
 class ViewController: UIViewController, WCSessionDelegate {
+    
+    /** Called when all delegate callbacks for the previously selected watch has occurred. The session can be re-activated for the now selected watch using activateSession. */
+    @available(iOS 9.3, *)
+    public func sessionDidDeactivate(_ session: WCSession) {
+        //..
+    }
+
+    
+    /** Called when the session can no longer be used to modify or add any new transfers and, all interactive messages will be cancelled, but delegate callbacks for background transfers can still occur. This will happen when the selected watch is being changed. */
+    @available(iOS 9.3, *)
+    public func sessionDidBecomeInactive(_ session: WCSession) {
+        //..
+    }
+
+    
+    /** Called when the session has completed activation. If session state is WCSessionActivationStateNotActivated there will be an error with more details. */
+    @available(iOS 9.3, *)
+    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        //..
+    }
+
 
     // MARK: - Interface
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var replyLabel: UILabel!
     
     // MARK: - Properties
-    private var session: WCSession!
+    fileprivate var session: WCSession!
     
     // MARK: - Calls
     override func viewDidLoad() {
@@ -25,9 +46,9 @@ class ViewController: UIViewController, WCSessionDelegate {
         
         // To configure and activate the session
         if WCSession.isSupported() {
-            session = WCSession.defaultSession()
+            session = WCSession.default()
             session.delegate = self
-            session.activateSession()
+            session.activate()
         }
     }
 
@@ -45,7 +66,7 @@ typealias PairedActions = ViewController
 extension PairedActions {
     
     // Send message to Apple Watch
-    @IBAction func sendToWatch(sender: AnyObject) {
+    @IBAction func sendToWatch(_ sender: AnyObject) {
         sendMessage()
     }
 }
@@ -56,13 +77,13 @@ typealias WatchSessionProtocol = ViewController
 extension WatchSessionProtocol {
     
     // WCSession Delegate protocol
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
         
         // Reply handler, received message
         let value = message["Message"] as? String
         
         // GCD - Present on the screen
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        DispatchQueue.main.async { () -> Void in
             self.replyLabel.text = value!
         }
         
@@ -82,17 +103,16 @@ extension WatchSessionTasks {
         let messageToSend = ["Message":"Hi watch, are you here?"]
         
         // Task : Sends a message immediately to the counterpart and optionally delivers a response
-        session.sendMessage(messageToSend, replyHandler: { (replyMessage) -> Void in
-            
+        session.sendMessage(messageToSend, replyHandler: { (replyMessage) in
             // Reply handler - present the reply message on screen
             let value = replyMessage["Message"] as? String
             
             // GCD - Present on the screen
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 self.replyLabel.text = value!
             })
             
-            }) { (error:NSError) -> Void in
+            }) { (error) in
                 // Catch any error Handler
                 print("error: \(error.localizedDescription)")
         }

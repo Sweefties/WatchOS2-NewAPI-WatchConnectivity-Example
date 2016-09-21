@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/build-pass-brightgreen.svg?style=flat-square)
 ![](https://img.shields.io/badge/platform-WatchOS2-ff69b4.svg?style=flat-square)
-![](https://img.shields.io/badge/Require-XCode7-lightgrey.svg?style=flat-square)
+![](https://img.shields.io/badge/Require-XCode%208-lightgrey.svg?style=flat-square)
 
 
 # WatchOS2 - New API - WatchConnectivity - Example
@@ -13,11 +13,15 @@ WatchOS 2 Experiments - New API Components - WatchConnectivity with Paired Devic
 
 ## Requirements
 
-- >= XCode 7 beta 6~.
-- >= Swift 2.
+- >= XCode 8.0.
+- >= Swift 3.
 - >= iOS 9.0.
 
-Tested on WatchOS2, iOS 9.0 Simulators, Apple Watch, iPhone 6.
+Tested on WatchOS3, iOS 10.0 Simulators, Apple Watch, iPhone 6, iPhone 7.
+
+## Important
+
+this is the Xcode 8 / Swift 3 updated project.
 
 ## Usage
 
@@ -43,16 +47,19 @@ Configure iOS App:
 Example of code in controllers classes WKInterfaceController (for WatchOS) AND ViewController (for iOS App) :
 
 - Add WatchConnectivity Framework
+
 ```swift
 import WatchConnectivity
 ```
 
 - Properties
+
 ```swift
 var session : WCSession!
 ```
 
 - in willActivate() for Watch Extension AND viewDidLoad() for iOS App
+
 ```swift
 // To configure and activate the session
 if WCSession.isSupported() {
@@ -63,6 +70,7 @@ if WCSession.isSupported() {
 ```
 
 - Send message example (iOS App -> Watch)
+
 ```swift
 // Method to send message to watchOS
 @IBAction func sendToWatch(sender: AnyObject) {
@@ -88,6 +96,7 @@ if WCSession.isSupported() {
 ```
 
 - Send message example (Watch -> iOS App)
+
 ```swift
 // Send message to paired iOS App (Parent)
 @IBAction func sendToParent() {
@@ -111,6 +120,7 @@ if WCSession.isSupported() {
 ```
 
 - WCSession Protocol example
+
 ```swift
 // WCSession Delegate protocol
 func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
