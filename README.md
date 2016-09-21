@@ -19,6 +19,11 @@ WatchOS 2 Experiments - New API Components - WatchConnectivity with Paired Devic
 
 Tested on WatchOS2, iOS 9.0 Simulators, Apple Watch, iPhone 6.
 
+## Important
+
+Get the `master` branch for XCode 8 / Swift 3 updated project.
+
+
 ## Usage
 
 To run the example project, download or clone the repo.
@@ -111,6 +116,7 @@ if WCSession.isSupported() {
 ```
 
 - WCSession Protocol example
+
 ```swift
 // WCSession Delegate protocol
 func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
